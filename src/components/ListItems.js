@@ -4,6 +4,36 @@ import fireDb from "../firebase";
 import React, { useEffect, useContext } from "react";
 // project imports
 import ContextComponent from "./Context";
+// ui imports
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableRow from "@material-ui/core/TableRow";
+import TableHead from "@material-ui/core/TableHead";
+import TableCell from "@material-ui/core/TableCell";
+import TableBody from "@material-ui/core/TableBody";
+import TableContainer from "@material-ui/core/TableContainer";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import { withStyles } from "@material-ui/core/styles";
+
+// styling elements for the table
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
 
 const ListItems = () => {
   const { itemState, dispatch, setformState } = useContext(ContextComponent);
@@ -25,6 +55,7 @@ const ListItems = () => {
       type: "DEL",
       item: itemID,
     });
+    document.getElementById("name").focus();
   };
   const editItem = (itemID) => {
     // edits form state only after clicking edit-button
@@ -33,50 +64,55 @@ const ListItems = () => {
       type: "EDIT",
       itemObject: { ...itemID },
     });
+    document.getElementById("name").focus();
   };
   return (
     // render table
     // iterate over objects to generate row data
-    <table>
-      <tbody>
-        <tr>
-          <th>name</th>
-          <th>age</th>
-          <th>loc</th>
-          <th>edit</th>
-          <th>del</th>
-        </tr>
-        {Object.keys(itemState).map((item) => (
-          <tr key={item}>
-            <td>{itemState[item].name}</td>
-            <td>{itemState[item].age}</td>
-            <td>{itemState[item].loc}</td>
-            <td>
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  editItem({ item, ...itemState[item] });
-                }}
-                href="#"
-              >
-                E
-              </a>
-            </td>
-            <td>
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  deleteItem(item);
-                }}
-                href="#"
-              >
-                X
-              </a>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <StyledTableRow>
+            <StyledTableCell>name</StyledTableCell>
+            <StyledTableCell>age</StyledTableCell>
+            <StyledTableCell>loc</StyledTableCell>
+            <StyledTableCell padding="none"></StyledTableCell>
+            <StyledTableCell padding="none"></StyledTableCell>
+          </StyledTableRow>
+        </TableHead>
+        <TableBody>
+          {Object.keys(itemState).map((item) => (
+            <StyledTableRow key={item}>
+              <StyledTableCell>{itemState[item].name}</StyledTableCell>
+              <StyledTableCell>{itemState[item].age}</StyledTableCell>
+              <StyledTableCell>{itemState[item].loc}</StyledTableCell>
+              <StyledTableCell padding="none">
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    editItem({ item, ...itemState[item] });
+                  }}
+                  href="#"
+                >
+                  <EditIcon color="primary" />
+                </a>
+              </StyledTableCell>
+              <StyledTableCell padding="none">
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteItem(item);
+                  }}
+                  href="#"
+                >
+                  <DeleteForeverIcon color="secondary" />
+                </a>
+              </StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

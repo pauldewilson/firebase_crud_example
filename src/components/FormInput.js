@@ -4,6 +4,9 @@ import fireDb from "../firebase";
 import React, { useState, useEffect, useContext } from "react";
 // project imports
 import ContextComponent from "./Context";
+// ui imports
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 const FormInput = () => {
   // formState for capturing requisite variables on editing an object
@@ -35,12 +38,12 @@ const FormInput = () => {
     setAge("");
     setLoc("");
     // focus back on name field
-    e.target.elements.name.focus();
+    document.getElementById('name').focus()
   };
   return (
     // render form
     <form onSubmit={onSubmitFunc}>
-      <input
+      <TextField
         autoFocus
         value={name}
         type="text"
@@ -48,22 +51,31 @@ const FormInput = () => {
         id="name"
         onChange={(e) => setName(e.target.value)}
       />
-      <input
+      <TextField
         value={age}
         type="text"
         placeholder="age"
         id="age"
         onChange={(e) => setAge(e.target.value)}
       />
-      <input
+      <TextField
         value={loc}
         type="text"
         placeholder="loc"
         id="loc"
         onChange={(e) => setLoc(e.target.value)}
       />
-      <button
+      <br></br>
+      <br></br>
+      <Button
+       type="submit"
+       variant="contained"
+       color="primary"
+       >{formState.item.length > 1 ? "Edit" : "Submit"}</Button>
+      <Button
         type="reset"
+        variant="contained"
+        color="secondary"
         href="#"
         onClick={(e) => {
           e.preventDefault();
@@ -71,13 +83,11 @@ const FormInput = () => {
           setName("");
           setAge("");
           setLoc("");
-          e.target.parentNode.elements.name.focus();
+          document.getElementById('name').focus()
         }}
       >
         Reset
-      </button>
-      <br></br>
-      <button type="submit">Submit</button>
+      </Button>
     </form>
   );
 };
