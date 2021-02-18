@@ -29,6 +29,8 @@ export const formStateReducer = (state, action) => {
       };
     case "CLEAR":
       return { item: "", name: "", age: "", loc: "" };
+    case "EDITMODE":
+      return {...state, editMode:true}
     default:
       return state;
   }

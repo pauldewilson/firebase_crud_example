@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 // system imports
 import fireDb from "../firebase";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 // project imports
 import ContextComponent from "./Context";
 // ui imports
@@ -38,7 +38,7 @@ const StyledTableRow = withStyles((theme) => ({
 const ListItems = () => {
   const { itemState, dispatch, setformState } = useContext(ContextComponent);
   // listen for updates from firebase
-  useEffect(() => {
+  useEffect((e) => {
     fireDb.child("items").on("value", (item) => {
       let itemData = item.val();
       // clear present state so any value changes on firestore are returned
@@ -47,6 +47,8 @@ const ListItems = () => {
         dispatch({ type: "ADD", item: itemData });
       }
     });
+    // listing for stopEventPropagation so if user clicks anywhere outside form element it clears state/deactivates edit state
+    document.addEventListener('click', console.log(111))
   }, []);
   const deleteItem = (itemID) => {
     // delete from firebase and clear from state
@@ -55,6 +57,8 @@ const ListItems = () => {
       type: "DEL",
       item: itemID,
     });
+    // clear form state 
+    setformState({type:'CLEAR'})
     document.getElementById("name").focus();
   };
   const editItem = (itemID) => {
@@ -66,6 +70,7 @@ const ListItems = () => {
     });
     document.getElementById("name").focus();
   };
+
   return (
     // render table
     // iterate over objects to generate row data
