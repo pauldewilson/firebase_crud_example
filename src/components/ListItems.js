@@ -47,8 +47,6 @@ const ListItems = () => {
         dispatch({ type: "ADD", item: itemData });
       }
     });
-    // listing for stopEventPropagation so if user clicks anywhere outside form element it clears state/deactivates edit state
-    document.addEventListener('click', console.log(111))
   }, []);
   const deleteItem = (itemID) => {
     // delete from firebase and clear from state
