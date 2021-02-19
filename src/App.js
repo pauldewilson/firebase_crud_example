@@ -28,9 +28,6 @@ export const App = () => {
         <Typography variant="subtitle1">
           Simple CRUD demonstration using a Firebase live-database
         </Typography>
-        <Typography variant="caption">
-          Note: There is no form validation
-        </Typography>
         <hr></hr>
         <FormInput />
         <br></br>

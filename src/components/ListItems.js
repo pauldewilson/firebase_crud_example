@@ -84,35 +84,37 @@ const ListItems = () => {
           </StyledTableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(itemState).map((item) => (
-            <StyledTableRow key={item}>
-              <StyledTableCell>{itemState[item].name}</StyledTableCell>
-              <StyledTableCell>{itemState[item].age}</StyledTableCell>
-              <StyledTableCell>{itemState[item].loc}</StyledTableCell>
-              <StyledTableCell padding="none">
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    editItem({ item, ...itemState[item] });
-                  }}
-                  href="#"
-                >
-                  <EditIcon color="primary" />
-                </a>
-              </StyledTableCell>
-              <StyledTableCell padding="none">
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    deleteItem(item);
-                  }}
-                  href="#"
-                >
-                  <DeleteForeverIcon color="secondary" />
-                </a>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
+          {Object.keys(itemState).map((item) => {
+            return(
+              <StyledTableRow key={item}>
+                <StyledTableCell>{itemState[item].name}</StyledTableCell>
+                <StyledTableCell>{itemState[item].age}</StyledTableCell>
+                <StyledTableCell>{itemState[item].loc}</StyledTableCell>
+                <StyledTableCell padding="none">
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                      editItem({ item, ...itemState[item] });
+                    }}
+                    href="#"
+                  >
+                    <EditIcon color="primary" />
+                  </a>
+                </StyledTableCell>
+                <StyledTableCell padding="none">
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                      deleteItem(item);
+                    }}
+                    href="#"
+                  >
+                    <DeleteForeverIcon color="secondary" />
+                  </a>
+                </StyledTableCell>
+              </StyledTableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </TableContainer>
